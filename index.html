@@ -3278,8 +3278,33 @@ h1.hero-title .accent {
   });
 
   // Red Moto Gestión — Mapa de talleres verificados
+  // Lee directamente desde Firestore REST (publicWorkshops tiene allow read: if true)
   (function() {
-    var API = 'https://app.motogestion.ar/api/public-workshops';
+    var FSBASE = 'https://firestore.googleapis.com/v1/projects/johnny-blaze-taller/databases/(default)/documents';
+    var FSKEY  = 'AIzaSyBp3QTOLvsro8blyhqevJ2m5mvBRmCHIBQ';
+
+    function fVal(v) {
+      if (!v) return null;
+      if ('stringValue'  in v) return v.stringValue;
+      if ('doubleValue'  in v) return v.doubleValue;
+      if ('integerValue' in v) return Number(v.integerValue);
+      if ('booleanValue' in v) return v.booleanValue;
+      if ('nullValue'    in v) return null;
+      if ('arrayValue'   in v) return (v.arrayValue.values||[]).map(fVal);
+      if ('mapValue'     in v) {
+        var o={}, f=v.mapValue.fields||{};
+        for(var k in f) o[k]=fVal(f[k]);
+        return o;
+      }
+      return null;
+    }
+
+    function parseDoc(doc) {
+      var f = doc.fields||{}, id=(doc.name||'').split('/').pop(), o={id:id};
+      for(var k in f) o[k]=fVal(f[k]);
+      return o;
+    }
+
     var BADGE = {
       destacado:   '<span class="mg-popup-badge badge-destacado">Destacado</span>',
       verificado:  '<span class="mg-popup-badge badge-verificado">Verificado</span>',
@@ -3345,9 +3370,14 @@ h1.hero-title .accent {
 
     window.addEventListener('load', function() {
       if (typeof L === 'undefined') { renderMap([]); return; }
-      fetch(API, { headers:{ Accept:'application/json' } })
-        .then(function(r){ return r.ok ? r.json() : { workshops:[] }; })
-        .then(function(d){ renderMap(d.workshops||[]); })
+      fetch(FSBASE+'/publicWorkshops?key='+FSKEY+'&pageSize=50')
+        .then(function(r){ return r.ok ? r.json() : {}; })
+        .then(function(d){
+          var docs = (d.documents||[]).map(parseDoc)
+            .filter(function(w){ return w.publicProfileEnabled; })
+            .sort(function(a,b){ return (b.ratingAvg||0)-(a.ratingAvg||0); });
+          renderMap(docs);
+        })
         .catch(function(){ renderMap([]); });
     });
   })();
