@@ -1741,6 +1741,12 @@ h1.hero-title .accent {
 .ranking-score { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .ranking-avg { font-weight: 700; font-size: 14px; color: var(--orange); }
 .ranking-count { font-size: 11px; color: var(--text-muted); }
+/* Formulario de contacto / lead */
+.lead-field { display: flex; flex-direction: column; gap: 6px; }
+.lead-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.lead-input { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 14px; color: var(--text); font-family: inherit; outline: none; transition: border-color 0.15s; width: 100%; box-sizing: border-box; }
+.lead-input:focus { border-color: var(--orange); }
+.lead-input::placeholder { color: var(--text-dim); }
 /* Leaflet popup dark theme */
 .leaflet-popup-content-wrapper {
   background: #1a1a1a !important;
@@ -2940,6 +2946,33 @@ h1.hero-title .accent {
   </div>
 </section>
 
+<!-- CONTACTO -->
+<section class="section" id="contacto" style="padding:80px 0;background:var(--bg-2);border-top:1px solid var(--border);">
+  <div class="container" style="max-width:600px;margin:0 auto;">
+    <div class="eyebrow">CONTACTO</div>
+    <h2 class="section-title">¿Tenés dudas?<br>Te contactamos.</h2>
+    <p class="section-subtitle" style="margin-left:auto;margin-right:auto;max-width:480px;">
+      Dejá tus datos. Te explicamos como funciona y como tu taller puede aparecer verificado en la red.
+    </p>
+    <form id="lead-form" style="margin-top:40px;display:flex;flex-direction:column;gap:16px;">
+      <div class="lead-field">
+        <label class="lead-label">Nombre del taller</label>
+        <input type="text" name="nombreTaller" placeholder="Ej: Taller Central, Servicio Rapido..." class="lead-input" required maxlength="100">
+      </div>
+      <div class="lead-field">
+        <label class="lead-label">Ciudad</label>
+        <input type="text" name="ciudad" placeholder="Ej: Cordoba, Buenos Aires..." class="lead-input" required maxlength="100">
+      </div>
+      <div class="lead-field">
+        <label class="lead-label">Telefono / WhatsApp</label>
+        <input type="tel" name="telefono" placeholder="+54 9 11 ..." class="lead-input" required maxlength="30">
+      </div>
+      <button type="submit" id="lead-submit" class="btn btn-primary" style="margin-top:8px;">Quiero que me contacten →</button>
+      <div id="lead-msg" style="display:none;text-align:center;font-size:13px;padding:12px 16px;border-radius:8px;"></div>
+    </form>
+  </div>
+</section>
+
 <div class="stripe-caution"></div>
 
 <!-- FOOTER -->
@@ -3117,6 +3150,46 @@ h1.hero-title .accent {
           + '</a>';
       }).join('');
     }
+
+    // Lead form
+    (function() {
+      var form = document.getElementById('lead-form');
+      var btn  = document.getElementById('lead-submit');
+      var msg  = document.getElementById('lead-msg');
+      if (!form) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+        msg.style.display = 'none';
+        fetch('https://app.motogestion.ar/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombreTaller: form.nombreTaller.value.trim(),
+            ciudad: form.ciudad.value.trim(),
+            telefono: form.telefono.value.trim(),
+          }),
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(d) {
+          if (d.ok) {
+            msg.textContent = 'Listo. Te contactamos pronto.';
+            msg.style.cssText = 'display:block;text-align:center;font-size:13px;padding:12px 16px;border-radius:8px;background:#052e16;color:#4ade80;border:1px solid #166534;';
+            form.reset();
+            btn.textContent = 'Mensaje enviado';
+          } else {
+            throw new Error(d.error || 'Error');
+          }
+        })
+        .catch(function() {
+          msg.textContent = 'Error al enviar. Intentá de nuevo.';
+          msg.style.cssText = 'display:block;text-align:center;font-size:13px;padding:12px 16px;border-radius:8px;background:#450a0a;color:#f87171;border:1px solid #991b1b;';
+          btn.disabled = false;
+          btn.textContent = 'Quiero que me contacten →';
+        });
+      });
+    })();
 
     window.addEventListener('load', function() {
       if (typeof L === 'undefined') { renderMap([]); return; }
