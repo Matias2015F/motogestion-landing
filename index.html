@@ -1722,6 +1722,25 @@ h1.hero-title .accent {
 }
 .map-stat .ms-num { font-family: 'Bebas Neue'; font-size: 36px; color: var(--orange); line-height: 1; }
 .map-stat .ms-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 6px; }
+/* Ranking de talleres verificados */
+.ranking-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.ranking-row:hover { background: var(--surface); }
+.ranking-row:last-child { border-bottom: none; }
+.ranking-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--orange); width: 28px; text-align: center; flex-shrink: 0; line-height: 1; }
+.ranking-info { flex: 1; min-width: 0; }
+.ranking-name { display: block; font-weight: 700; font-size: 13px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ranking-city { font-size: 11px; color: var(--text-muted); }
+.ranking-score { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.ranking-avg { font-weight: 700; font-size: 14px; color: var(--orange); }
+.ranking-count { font-size: 11px; color: var(--text-muted); }
 /* Leaflet popup dark theme */
 .leaflet-popup-content-wrapper {
   background: #1a1a1a !important;
@@ -2755,6 +2774,26 @@ h1.hero-title .accent {
       <div class="map-stat"><div class="ms-num" id="ms-trabajos">—</div><div class="ms-lbl">Trabajos documentados</div></div>
       <div class="map-stat"><div class="ms-num" id="ms-recomienda">—%</div><div class="ms-lbl">Promedio recomienda</div></div>
     </div>
+
+    <div id="mg-ranking" style="display:none;margin-top:48px;">
+      <div class="eyebrow" style="margin-bottom:16px;">Ranking · mejor calificados</div>
+      <div id="mg-ranking-list" style="border:1px solid var(--border);border-radius:12px;overflow:hidden;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- UNÍTE A LA RED -->
+<section class="section" style="padding:80px 0;background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;">
+  <div class="container" style="max-width:720px;margin:0 auto;">
+    <div class="eyebrow">RED MOTO GESTIÓN</div>
+    <h2 class="section-title">Tu taller puede<br>estar aquí.</h2>
+    <p class="section-subtitle" style="margin-left:auto;margin-right:auto;max-width:520px;">
+      Documentá tus trabajos. Emití comprobantes verificables. Construí una reputación que ningún cliente puede poner en duda.
+    </p>
+    <div style="margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://app.motogestion.ar" class="btn btn-primary" style="font-size:14px;padding:18px 36px;">Quiero que mi taller sea verificable →</a>
+    </div>
+    <p style="margin-top:20px;font-size:12px;color:var(--text-muted);">Trial gratis. Sin tarjeta. Sin compromiso.</p>
   </div>
 </section>
 
@@ -2830,17 +2869,13 @@ h1.hero-title .accent {
     </div>
 
     <div class="activation-flow">
-      <h3>Flujo de activación — sin intervención manual</h3>
+      <h3>Se activa solo — sin espera</h3>
       <div class="activation-steps">
         <div class="activation-step"><span class="step-n">1</span>Elegís plan en la app</div>
         <div class="activation-arrow">→</div>
-        <div class="activation-step"><span class="step-n">2</span>Pagás en Mercado Pago</div>
+        <div class="activation-step"><span class="step-n">2</span>Pagás con Mercado Pago</div>
         <div class="activation-arrow">→</div>
-        <div class="activation-step"><span class="step-n">3</span>Webhook recibe confirmación</div>
-        <div class="activation-arrow">→</div>
-        <div class="activation-step"><span class="step-n">4</span>Firestore actualiza activoHasta</div>
-        <div class="activation-arrow">→</div>
-        <div class="activation-step"><span class="step-n">5</span>App se desbloquea sola</div>
+        <div class="activation-step"><span class="step-n">3</span>Tu cuenta se activa sola</div>
       </div>
     </div>
   </div>
@@ -3060,6 +3095,29 @@ h1.hero-title .accent {
       }
     }
 
+    function renderRanking(talleres) {
+      var el = document.getElementById('mg-ranking');
+      var list = document.getElementById('mg-ranking-list');
+      if (!el || !list) return;
+      var conRating = talleres.filter(function(t){ return t.ratingCount > 0; });
+      if (!conRating.length) return;
+      el.style.display = 'block';
+      list.innerHTML = conRating.map(function(t, i) {
+        var ciudad = [t.ciudad, t.provincia].filter(Boolean).join(', ');
+        return '<a href="https://app.motogestion.ar/taller/'+t.id+'" target="_blank" class="ranking-row">'
+          + '<span class="ranking-num">'+(i+1)+'</span>'
+          + '<div class="ranking-info">'
+          +   '<span class="ranking-name">'+t.nombreTaller+'</span>'
+          +   (ciudad ? '<span class="ranking-city">'+ciudad+'</span>' : '')
+          + '</div>'
+          + '<div class="ranking-score">'
+          +   '<span class="ranking-avg">★ '+Number(t.ratingAvg||0).toFixed(1)+'</span>'
+          +   '<span class="ranking-count">('+t.ratingCount+')</span>'
+          + '</div>'
+          + '</a>';
+      }).join('');
+    }
+
     window.addEventListener('load', function() {
       if (typeof L === 'undefined') { renderMap([]); return; }
       fetch(FSBASE+'/publicWorkshops?key='+FSKEY+'&pageSize=50')
@@ -3069,6 +3127,7 @@ h1.hero-title .accent {
             .filter(function(w){ return w.publicProfileEnabled; })
             .sort(function(a,b){ return (b.ratingAvg||0)-(a.ratingAvg||0); });
           renderMap(docs);
+          renderRanking(docs);
         })
         .catch(function(){ renderMap([]); });
     });
