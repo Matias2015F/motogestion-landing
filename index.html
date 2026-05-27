@@ -2839,7 +2839,7 @@ h1.hero-title .accent {
         <div class="plan-tagline">Para ordenar el taller y emitir comprobantes</div>
         <div class="plan-price">
           <span class="currency">$</span>
-          <span class="amount">125.000</span>
+          <span class="amount" data-plan="base">125.000</span>
           <span class="period">ARS / 30 días</span>
         </div>
         <ul class="plan-features">
@@ -2859,7 +2859,7 @@ h1.hero-title .accent {
         <div class="plan-tagline">Para validar servicios y construir reputación</div>
         <div class="plan-price">
           <span class="currency">$</span>
-          <span class="amount">300.000</span>
+          <span class="amount" data-plan="pro">300.000</span>
           <span class="period">ARS / 90 días</span>
         </div>
         <ul class="plan-features">
@@ -2878,7 +2878,7 @@ h1.hero-title .accent {
         <div class="plan-tagline">El mejor precio por mes</div>
         <div class="plan-price">
           <span class="currency">ARS</span>
-          <span class="amount">900.000</span>
+          <span class="amount" data-plan="full">900.000</span>
           <span class="period">/ año</span>
         </div>
         <ul class="plan-features">
@@ -3224,6 +3224,21 @@ h1.hero-title .accent {
         .catch(function(){ renderMap([]); });
     });
   })();
+</script>
+
+<script>
+(function () {
+  var fmt = new Intl.NumberFormat("es-AR");
+  fetch("https://app.motogestion.ar/api/public-prices")
+    .then(function (r) { return r.json(); })
+    .then(function (p) {
+      document.querySelectorAll("[data-plan]").forEach(function (el) {
+        var plan = el.getAttribute("data-plan");
+        if (p[plan] != null) el.textContent = fmt.format(p[plan]);
+      });
+    })
+    .catch(function () {});
+})();
 </script>
 
 </body>
