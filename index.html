@@ -2841,7 +2841,7 @@ h1.hero-title .accent {
         <div class="plan-price">
           <span class="currency">$</span>
           <span class="amount" data-plan="base">125.000</span>
-          <span class="period">ARS / 30 días</span>
+          <span class="period" data-period="base">ARS / 30 dias</span>
         </div>
         <ul class="plan-features">
           <li>Órdenes de trabajo digitales</li>
@@ -2861,7 +2861,7 @@ h1.hero-title .accent {
         <div class="plan-price">
           <span class="currency">$</span>
           <span class="amount" data-plan="pro">300.000</span>
-          <span class="period">ARS / 90 días</span>
+          <span class="period" data-period="pro">ARS / 90 dias</span>
         </div>
         <ul class="plan-features">
           <li>Todo de Gestión Documentada</li>
@@ -2880,12 +2880,12 @@ h1.hero-title .accent {
         <div class="plan-price">
           <span class="currency">ARS</span>
           <span class="amount" data-plan="full">900.000</span>
-          <span class="period">/ año</span>
+          <span class="period" data-period="full">ARS / 365 dias</span>
         </div>
         <ul class="plan-features">
           <li>Todo lo de Taller Verificado</li>
-          <li>Equivale a ARS 75.000 / mes</li>
-          <li>Ahorrás ARS 600.000 vs mensual</li>
+          <li>Equivale a ARS <span data-full-monthly>75.000</span> / mes</li>
+          <li>Ahorro aproximado frente al mensual: ARS <span data-full-saving>600.000</span></li>
           <li>Renovación anual</li>
           <li>Soporte prioritario</li>
         </ul>
@@ -3237,6 +3237,20 @@ h1.hero-title .accent {
         var plan = el.getAttribute("data-plan");
         if (p[plan] != null) el.textContent = fmt.format(p[plan]);
       });
+      document.querySelectorAll("[data-period]").forEach(function (el) {
+        var plan = el.getAttribute("data-period");
+        var days = p.planDurations && p.planDurations[plan];
+        if (days != null) el.textContent = (p.currency || "ARS") + " / " + days + " dias";
+      });
+      var baseDays = p.planDurations && p.planDurations.base;
+      var fullDays = p.planDurations && p.planDurations.full;
+      var monthlyEl = document.querySelector("[data-full-monthly]");
+      var savingEl = document.querySelector("[data-full-saving]");
+      if (monthlyEl && p.full != null && fullDays) monthlyEl.textContent = fmt.format(Math.round(Number(p.full) / Number(fullDays) * 30));
+      if (savingEl && p.base != null && p.full != null && baseDays && fullDays) {
+        var equivalent = Number(p.base) / Number(baseDays) * Number(fullDays);
+        savingEl.textContent = fmt.format(Math.max(0, Math.round(equivalent - Number(p.full))));
+      }
     })
     .catch(function () {});
 })();
