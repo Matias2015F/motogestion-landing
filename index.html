@@ -3231,7 +3231,8 @@ h1.hero-title .accent {
 <script>
 (function () {
   var fmt = new Intl.NumberFormat("es-AR");
-  fetch("https://app.motogestion.ar/api/public-prices")
+  var pricesUrl = "https://app.motogestion.ar/api/public-prices?ts=" + Date.now();
+  fetch(pricesUrl, { cache: "no-store" })
     .then(function (r) { return r.json(); })
     .then(function (p) {
       document.querySelectorAll("[data-plan]").forEach(function (el) {
