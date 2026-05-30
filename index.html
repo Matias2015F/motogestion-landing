@@ -3300,11 +3300,13 @@ h1.hero-title .accent {
 
     window.addEventListener('load', function() {
       if (typeof L === 'undefined') { renderMap([]); return; }
-      fetch(FSBASE+'/publicWorkshops?key='+FSKEY+'&pageSize=50')
+
+      // Fuente oficial: endpoint público del SaaS (evita depender de Firestore REST + API key en el frontend)
+      fetch('https://app.motogestion.ar/api/public-workshops?ts=' + Date.now(), { cache: 'no-store' })
         .then(function(r){ return r.ok ? r.json() : {}; })
         .then(function(d){
-          var docs = (d.documents||[]).map(parseDoc)
-            .filter(function(w){ return w.publicProfileEnabled; })
+          var docs = (d.workshops||[])
+            .filter(function(w){ return w && w.lat && w.lng; })
             .sort(function(a,b){ return (b.ratingAvg||0)-(a.ratingAvg||0); });
           renderMap(docs);
           renderRanking(docs);
