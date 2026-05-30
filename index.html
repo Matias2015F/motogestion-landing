@@ -2014,6 +2014,8 @@ h1.hero-title .accent {
         <div class="use-case"><div class="use-case-num">USO / 08</div><div class="use-case-title">Hacer backup de todos los datos</div></div>
         <div class="use-case"><div class="use-case-num">USO / 09</div><div class="use-case-title">Recibir calificaciones verificadas de clientes via QR</div></div>
         <div class="use-case"><div class="use-case-num">USO / 10</div><div class="use-case-title">Consultar el promedio de reputacion del taller por categoria</div></div>
+        <div class="use-case"><div class="use-case-num">USO / 11</div><div class="use-case-title">Generar descuento automatico para el cliente que califica la atencion</div></div>
+        <div class="use-case"><div class="use-case-num">USO / 12</div><div class="use-case-title">Detectar el beneficio pendiente al presupuestar la misma moto</div></div>
       </div>
     </div>
   </div>
@@ -2622,6 +2624,26 @@ h1.hero-title .accent {
       </div>
     </div>
 
+    <!-- Bonus: recurrencia automatica por descuento -->
+    <div style="margin:48px 0 0;padding:28px 32px;background:linear-gradient(135deg,rgba(0,217,107,0.07),rgba(0,217,107,0.02));border:1px solid rgba(0,217,107,0.25);border-radius:12px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;">
+      <div style="flex:1;min-width:260px;">
+        <div style="font-family:'JetBrains Mono';font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">BONUS — RECURRENCIA AUTOMATICA</div>
+        <div style="font-family:'Bebas Neue';font-size:30px;color:var(--text);letter-spacing:0.02em;line-height:1.1;">El cliente que califica<br>vuelve con descuento.</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:12px;line-height:1.6;">
+          Cuando el cliente califica, la app genera un beneficio de descuento atado a la patente del vehículo. La próxima vez que esa moto entra al taller, el descuento se detecta solo y aparece en el presupuesto y en el mensaje de WhatsApp — sin que el mecánico tenga que hacer nada.
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:180px;text-align:center;">
+        <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
+          <div style="font-family:'Bebas Neue';font-size:40px;color:var(--orange);line-height:1;">15%</div>
+          <div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.07em;margin-top:4px;">Configurable por taller</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.6;">
+          Un beneficio por vehículo.<br>Se consume al usarse.<br>No se acumula.
+        </div>
+      </div>
+    </div>
+
     <!-- 3-column grid -->
     <div class="rep-grid">
 
@@ -2787,6 +2809,70 @@ h1.hero-title .accent {
     <div id="mg-ranking" style="display:none;margin-top:48px;">
       <div class="eyebrow" style="margin-bottom:16px;">Ranking · mejor calificados</div>
       <div id="mg-ranking-list" style="border:1px solid var(--border);border-radius:12px;overflow:hidden;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EL CIRCUITO COMPLETO -->
+<section class="section" id="circuito" style="background:var(--bg);padding:100px 0;">
+  <div class="container">
+    <div class="eyebrow">EL CIRCUITO</div>
+    <h2 class="section-title">Del trabajo al retorno.<br><span style="color:var(--orange)">Automatico.</span></h2>
+    <p class="section-subtitle">Cada atención bien documentada genera la siguiente. Sin pedir reseñas, sin recordatorios manuales, sin descuentos improvisados.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3px;margin-top:56px;">
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">01</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Trabajo terminado</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">El mecánico marca la orden como finalizada con todos los ítems cargados.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">02</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Cobrado — pendiente de retiro</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">El pago se registra pero la orden queda abierta. El PDF final espera el retiro real de la moto.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">03</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Retiro confirmado</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">El mecánico confirma la entrega. La orden se cierra y se habilita el comprobante final.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">04</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">PDF + garantía estructurada</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Comprobante con 9 secciones editables: observaciones, límites de garantía, próximos servicios.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">05</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">WhatsApp + link verificable</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">El mecánico envía el PDF y, por separado, invita al cliente a calificar con un link único.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">06</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Cliente califica</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Verifica su identidad con los últimos 4 dígitos de su teléfono y califica en 4 categorías.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--green);line-height:1;margin-bottom:8px;">07</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Descuento generado automático</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">La app crea un beneficio de X% atado a la patente. Sin avisos manuales, sin cupones.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--green);line-height:1;margin-bottom:8px;">08</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Próximo presupuesto con descuento</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Cuando esa moto vuelve, el descuento aparece solo en el presupuesto y en el mensaje de WhatsApp.</div>
+      </div>
+      <div style="padding:20px 18px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--orange);">
+        <div style="font-family:'Bebas Neue';font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px;">09</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Taller sube en el ranking</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Las calificaciones verificadas acumulan reputación pública. El taller aparece en el mapa y el ranking.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:56px;padding:28px 32px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center;">
+      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:4px;">EL RESULTADO</div>
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--text);letter-spacing:0.02em;">Orden documentada → garantía → reputación verificada → descuento → retorno → ranking público</div>
+      <div style="margin-top:20px;font-size:13px;color:var(--text-muted);">La app no solo ordena el taller. Genera recurrencia comercial verificable.</div>
+      <a href="https://app.motogestion.ar" class="btn btn-primary" style="margin-top:28px;display:inline-block;font-size:14px;padding:16px 36px;">Empezar gratis →</a>
     </div>
   </div>
 </section>
