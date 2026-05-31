@@ -1774,6 +1774,8 @@ h1.hero-title .accent {
 .badge-documentado{ background: rgba(255,192,0,0.15);  color: #ffc000; }
 .badge-registrado { background: rgba(150,150,150,0.15);color: #aaa; }
 .mg-popup-comment { margin-top: 10px; padding-top: 10px; border-top: 1px solid #2a2a2a; font-size: 11px; color: #888; font-style: italic; line-height: 1.5; }
+.mg-popup-howto { margin-top: 12px; display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 12px 14px; border-radius: 10px; background: #ff6b00; color: #000; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+.mg-popup-howto:hover { filter: brightness(1.05); }
 </style>
 </head>
 <body>
@@ -3217,8 +3219,10 @@ h1.hero-title .accent {
         var garTxt = t.garantiasRegistradas > 0 ? '<div class="mg-popup-garantia">Garantias registradas: '+t.garantiasRegistradas+'</div>' : '';
         var comTxt = (t.comentariosRecientes && t.comentariosRecientes[0] && t.comentariosRecientes[0].texto)
           ? '<div class="mg-popup-comment">"'+String(t.comentariosRecientes[0].texto).slice(0,90)+'..."</div>' : '';
+        var gmaps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(t.lat + ',' + t.lng);
+        var howto = '<a class="mg-popup-howto" href="' + gmaps + '" target="_blank" rel="noopener noreferrer">Como llegar</a>';
         L.marker([t.lat,t.lng],{icon:mkIcon(t.nivel||'registrado')})
-          .bindPopup('<div class="mg-popup"><div class="mg-popup-name">'+t.nombreTaller+'</div><div class="mg-popup-city">'+t.ciudad+', '+t.provincia+'</div>'+rTxt+recTxt+garTxt+(BADGE[t.nivel]||BADGE.registrado)+comTxt+'</div>',{maxWidth:280})
+          .bindPopup('<div class="mg-popup"><div class="mg-popup-name">'+t.nombreTaller+'</div><div class="mg-popup-city">'+t.ciudad+', '+t.provincia+'</div>'+rTxt+recTxt+garTxt+(BADGE[t.nivel]||BADGE.registrado)+comTxt+howto+'</div>',{maxWidth:280})
           .addTo(map);
         totRat += t.ratingCount||0;
         totTrab += t.trabajosDocumentados||0;
