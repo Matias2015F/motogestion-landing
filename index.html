@@ -535,6 +535,48 @@ h1.hero-title .accent {
   flex-wrap: wrap;
   margin-bottom: 40px;
 }
+.hero-routes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0 24px;
+}
+.hero-route-card {
+  display: block;
+  min-height: 132px;
+  padding: 18px;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  background: #1a1a1a;
+  text-decoration: none;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.hero-route-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,107,0,.55);
+  background: #202020;
+}
+.hero-route-kicker {
+  font-size: 10px;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+.hero-route-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: .03em;
+}
+.hero-route-text {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -694,6 +736,7 @@ h1.hero-title .accent {
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .hero-content { max-width: 100%; }
   .phone-mock { max-width: 280px; }
+  .hero-routes { grid-template-columns: 1fr; }
   .hero-stats { grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
   .hero-stat-num { font-size: 28px; }
 }
@@ -1879,39 +1922,33 @@ h1.hero-title .accent {
       <div class="hero-content">
         <div class="hero-badge">
           <span class="dot"></span>
-          <span>APP GRATUITA PARA TALLERES DE MOTOS — ARGENTINA</span>
+          <span>RED DE TALLERES Y COMPROBANTES VERIFICADOS</span>
         </div>
         <h1 class="hero-title">
-          Software de gestión<br>
-          para taller mecánico<br>
-          <span class="accent">de motos.</span>
+          Verificá tu taller.<br>
+          Validá tu comprobante.<br>
+          <span class="accent">Volvé con beneficio.</span>
         </h1>
         <p class="hero-sub">
-          Dejá de perder plata con trabajos sin cobrar, clientes que no entienden el presupuesto o garantías que nadie respeta. MotoGestión te da órdenes de trabajo, presupuestos por WhatsApp, comprobantes PDF con QR verificable y reputación real construida por tus propios clientes.
+          MotoGestión conecta talleres de motos con clientes que quieren garantía, comprobantes reales y reputación verificable.
         </p>
 
-        <!-- Tres beneficiarios — claro de un vistazo -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 24px;">
-          <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:16px 12px;text-align:center;">
-            <div style="font-size:22px;margin-bottom:8px;">🔧</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#ff6b00;letter-spacing:.05em;">Para el taller</div>
-            <div style="font-size:11px;color:#999;line-height:1.5;margin-top:6px;">Menos papel. Más control. Más plata.</div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:16px 12px;text-align:center;">
-            <div style="font-size:22px;margin-bottom:8px;">👤</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#ff6b00;letter-spacing:.05em;">Para el cliente</div>
-            <div style="font-size:11px;color:#999;line-height:1.5;margin-top:6px;">Presupuesto por WhatsApp. PDF al retirar.</div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:16px 12px;text-align:center;">
-            <div style="font-size:22px;margin-bottom:8px;">⭐</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#ff6b00;letter-spacing:.05em;">Reputación</div>
-            <div style="font-size:11px;color:#999;line-height:1.5;margin-top:6px;">QR verificable. Calificaciones reales.</div>
-          </div>
+        <div class="hero-routes" aria-label="Elegí cómo querés usar MotoGestión">
+          <a href="https://app.motogestion.ar" class="hero-route-card">
+            <div class="hero-route-kicker">Soy taller</div>
+            <div class="hero-route-title">Quiero gestionar y emitir comprobantes</div>
+            <div class="hero-route-text">Cargá órdenes, presupuestos, PDF con QR y calificaciones reales desde el celular.</div>
+          </a>
+          <a href="#red" class="hero-route-card">
+            <div class="hero-route-kicker">Soy cliente</div>
+            <div class="hero-route-title">Quiero ver talleres verificados</div>
+            <div class="hero-route-text">Buscá reputación real y validá comprobantes emitidos por talleres que documentan su trabajo.</div>
+          </a>
         </div>
 
         <div class="hero-actions">
-          <a href="https://app.motogestion.ar" class="btn btn-primary">Quiero que mi taller sea verificable →</a>
-          <a href="#reputacion" class="btn btn-secondary">Ver cómo funciona la verificación</a>
+          <a href="https://app.motogestion.ar" class="btn btn-primary">Entrar como taller →</a>
+          <a href="#red" class="btn btn-secondary">Ver talleres verificados</a>
         </div>
         <div class="hero-stats">
           <div>
