@@ -1887,6 +1887,82 @@ h1.hero-title .accent {
 .mg-popup-comment { margin-top: 10px; padding-top: 10px; border-top: 1px solid #2a2a2a; font-size: 11px; color: #888; font-style: italic; line-height: 1.5; }
 .mg-popup-howto { margin-top: 12px; display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 12px 14px; border-radius: 10px; background: #ff6b00; color: #000; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
 .mg-popup-howto:hover { filter: brightness(1.05); }
+
+/* ============================================
+   SHOWCASE — Comprobante del cliente
+   ============================================ */
+.showcase-section { background: var(--bg); }
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.showcase-text-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 32px;
+}
+.showcase-text-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.showcase-text-list li span {
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.showcase-phone-wrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.showcase-phone-wrap::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,0,0.18) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.showcase-phone-img {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 28px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
+  position: relative;
+  z-index: 1;
+}
+
+/* Login showcase */
+.login-showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 80px;
+}
+
+@media (max-width: 768px) {
+  .showcase-grid,
+  .login-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .showcase-phone-img { max-width: 220px; }
+  .login-showcase-grid .showcase-phone-wrap { order: -1; }
+}
 </style>
 </head>
 <body>
@@ -2080,9 +2156,7 @@ h1.hero-title .accent {
   <div class="container">
     <div class="eyebrow">01 / Aplicaciones y casos de uso</div>
     <h2 class="section-title">Dejá la libreta y el Excel.<br>Gestioná tu taller de motos desde el celular.</h2>
-    <p class="section-subtitle">
-      MotoGestión está pensada para mecánicos de motos independientes y talleres pequeños. Funciona desde el celular, sin necesidad de PC ni planillas. Reemplaza todo lo que hoy hacés a mano.
-    </p>
+    <p class="section-subtitle">Funciona desde el celular. Sin PC, sin planillas, sin papeles.</p>
 
     <div class="replace-grid">
       <div class="replace-col old">
@@ -2231,6 +2305,54 @@ h1.hero-title .accent {
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- 03b — SHOWCASE COMPROBANTE -->
+<section class="section showcase-section">
+  <div class="container">
+    <div class="showcase-grid">
+      <div>
+        <div class="eyebrow">Lo que ve tu cliente</div>
+        <h2 class="section-title">El comprobante<br>que te diferencia.</h2>
+        <p style="font-size:18px;color:var(--text-muted);line-height:1.6;margin-bottom:0;">Después de cada trabajo, el cliente recibe un comprobante real por WhatsApp. Lo escanea con QR, califica y descarga el PDF. Vos no hacés nada más.</p>
+        <ul class="showcase-text-list">
+          <li><span>✓</span> Número de OT, moto, trabajos y total — todo documentado</li>
+          <li><span>✓</span> QR verificable: el cliente confirma que el trabajo es real</li>
+          <li><span>✓</span> PDF bloqueado — se desbloquea al calificar</li>
+          <li><span>✓</span> 15% de descuento automático en el próximo service</li>
+        </ul>
+      </div>
+      <div class="showcase-phone-wrap">
+        <img
+          src="/screenshots/app-comprobante.png"
+          alt="Pantalla de comprobante verificable — MotoGestión"
+          class="showcase-phone-img"
+          loading="lazy"
+          width="390"
+          height="844"
+        >
+      </div>
+    </div>
+
+    <div class="login-showcase-grid">
+      <div class="showcase-phone-wrap">
+        <img
+          src="/screenshots/app-login.png"
+          alt="Pantalla de ingreso a MotoGestión"
+          class="showcase-phone-img"
+          loading="lazy"
+          width="390"
+          height="844"
+        >
+      </div>
+      <div>
+        <div class="eyebrow">Empezar es gratis</div>
+        <h2 class="section-title">Entrás en<br>30 segundos.</h2>
+        <p style="font-size:18px;color:var(--text-muted);line-height:1.6;">Creás la cuenta con tu correo, ingresás y ya podés cargar tu primer orden. Sin tarjeta, sin tutorial largo, sin instalación.</p>
+        <a href="https://app.motogestion.ar" class="btn btn-primary" style="margin-top:32px;display:inline-flex;">Crear cuenta gratis →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -2513,9 +2635,7 @@ h1.hero-title .accent {
   <div class="container">
     <div class="eyebrow">06 / Respaldo y seguridad de datos</div>
     <h2 class="section-title">4 capas de respaldo.<br>0 datos perdidos.</h2>
-    <p class="section-subtitle">
-      Tus datos están a salvo en la nube de Google, en tu celular, en backups automáticos y en archivos descargables. Si rompés el teléfono, los datos siguen.
-    </p>
+    <p class="section-subtitle">Si rompés el teléfono, los datos siguen. Siempre.</p>
 
     <div class="backup-grid">
       <div class="backup-card">
