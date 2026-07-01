@@ -598,6 +598,37 @@ h1.hero-title .accent {
   margin-top: 6px;
 }
 
+/* GROWTH-001: diferenciadores + prueba social en el hero */
+.hero-diffs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0 0 32px;
+  max-width: 560px;
+}
+.hero-diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #1a1a1a;
+}
+.hero-diff .chk { color: var(--orange); font-weight: 900; }
+.hero-diff.is-benefit { color: var(--orange); border-color: rgba(255,107,0,.5); }
+.hero-social {
+  display: none;
+  margin-top: 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+.hero-social b { color: var(--orange); font-weight: 900; }
+
 /* Phone mockup */
 .phone-mock {
   position: relative;
@@ -2017,6 +2048,13 @@ h1.hero-title .accent {
           Cargá órdenes de trabajo, mandá presupuestos por WhatsApp y emitís comprobantes PDF verificables en 30 segundos. Sin PC, sin papeles.
         </p>
 
+        <div class="hero-diffs" aria-label="Qué obtenés con MotoGestión">
+          <span class="hero-diff"><span class="chk">✓</span> Comprobante verificable</span>
+          <span class="hero-diff"><span class="chk">✓</span> Garantía digital</span>
+          <span class="hero-diff"><span class="chk">✓</span> Historial certificado</span>
+          <span class="hero-diff is-benefit"><span class="chk">✓</span> 15% de descuento que fideliza a tu cliente</span>
+        </div>
+
         <div class="hero-routes" aria-label="Elegí cómo querés usar MotoGestión">
           <a href="https://app.motogestion.ar" class="hero-route-card">
             <div class="hero-route-kicker">Soy taller</div>
@@ -2049,6 +2087,13 @@ h1.hero-title .accent {
             <div class="hero-stat-label">Para empezar</div>
           </div>
         </div>
+        <p class="hero-social" id="hero-social">
+          Datos reales de la red:
+          <b id="hero-ms-talleres">—</b> talleres ·
+          <b id="hero-ms-trabajos">—</b> trabajos documentados ·
+          <b id="hero-ms-calificaciones">—</b> calificaciones reales ·
+          <b id="hero-ms-recomienda">—%</b> recomienda
+        </p>
       </div>
       <div class="hero-visual">
         <div class="phone-mock">
@@ -3471,6 +3516,21 @@ h1.hero-title .accent {
           var v = [talleres.length, totRat, totTrab, cntRec ? Math.round(totRec/cntRec)+'%' : '—%'][i];
           var el2 = document.getElementById(id); if (el2) el2.textContent = v;
         });
+      }
+
+      // GROWTH-001: espejo de prueba social real en el hero (misma fuente en vivo)
+      if (talleres.length) {
+        var heroSocial = document.getElementById('hero-social');
+        var heroVals = {
+          'hero-ms-talleres': talleres.length,
+          'hero-ms-trabajos': totTrab,
+          'hero-ms-calificaciones': totRat,
+          'hero-ms-recomienda': cntRec ? Math.round(totRec/cntRec)+'%' : '—%'
+        };
+        Object.keys(heroVals).forEach(function(id) {
+          var el3 = document.getElementById(id); if (el3) el3.textContent = heroVals[id];
+        });
+        if (heroSocial) heroSocial.style.display = 'block';
       }
     }
 
